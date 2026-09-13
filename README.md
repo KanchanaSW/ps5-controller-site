@@ -2,6 +2,8 @@
 
 Scroll-driven product site for the **COSMIC** wireless controller. A pinned story sequence walks through the hardware, then features, specs, and a closing call to action.
 
+**Live site: [kanchanasw.github.io/ps5-controller-site](https://kanchanasw.github.io/ps5-controller-site/)**
+
 ## Stack
 
 - [Next.js](https://nextjs.org) 16 (App Router) and React 19
@@ -9,7 +11,7 @@ Scroll-driven product site for the **COSMIC** wireless controller. A pinned stor
 - [GSAP](https://gsap.com) + ScrollTrigger for the story timeline
 - [Three.js](https://threejs.org) via React Three Fiber for the atmosphere layer
 - [Motion](https://motion.dev) for UI motion
-- Deploys to [Netlify](https://www.netlify.com)
+- Static export deployed to [GitHub Pages](https://pages.github.com)
 
 ## Getting started
 
@@ -51,6 +53,10 @@ public/media/   controller stills and explode video
 
 ## Deploy
 
-The site builds with `npm run build` and publishes `.next` (see `netlify.toml`). Netlify detects Next.js and handles the runtime automatically.
+Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the static export (`output: "export"`) and publishes `out/` to GitHub Pages at [kanchanasw.github.io/ps5-controller-site](https://kanchanasw.github.io/ps5-controller-site/).
 
-Media under `/media/*` is cached as immutable for one year.
+Because Pages serves this as a project site under `/ps5-controller-site`, the workflow sets `NEXT_PUBLIC_BASE_PATH` to that prefix and `NEXT_PUBLIC_SITE_URL` to the origin. `basePath` only rewrites framework URLs, so the paths in `lib/constants.ts` apply the prefix themselves — keep new `public/` references going through `MEDIA` rather than hardcoding `/media/...`. Both variables are unset locally, so `npm run dev` stays at the root.
+
+On a root domain or a custom domain, drop `NEXT_PUBLIC_BASE_PATH`.
+
+`netlify.toml` is kept for Netlify deploys, where it publishes the same `out/` directory and caches `/media/*` as immutable for one year.
