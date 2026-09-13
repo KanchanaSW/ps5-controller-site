@@ -3,11 +3,15 @@ export const PRODUCT = {
   model: "Wireless Controller",
 } as const;
 
+// `basePath` only rewrites framework URLs, not `public/` asset paths we build
+// ourselves, so these carry the prefix explicitly.
+export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const MEDIA = {
-  controller: "/media/controller.jpg",
-  assembled: "/media/assembled.jpg",
-  exploded: "/media/exploded.jpg",
-  video: "/media/explode.mp4",
+  controller: `${BASE_PATH}/media/controller.jpg`,
+  assembled: `${BASE_PATH}/media/assembled.jpg`,
+  exploded: `${BASE_PATH}/media/exploded.jpg`,
+  video: `${BASE_PATH}/media/explode.mp4`,
 } as const;
 
 export const NAV_ITEMS = [
